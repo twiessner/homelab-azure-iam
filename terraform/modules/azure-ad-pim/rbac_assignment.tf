@@ -28,7 +28,7 @@ resource "azapi_resource" "pim" {
   body = jsonencode({
     properties = {
       principalId      = var.group_id
-      requestType      = "AdminRenew"
+      requestType      = "AdminAssign"
       roleDefinitionId = data.azurerm_role_definition.role[each.key].id
       scheduleInfo = {
         expiration = {
