@@ -17,7 +17,6 @@ override.tf.json
 *_override.tf.json
 
 _tenant.auto.tfvars
-_tenat
 
 # Include override files you do wish to add to version control using negated pattern
 #
@@ -29,4 +28,3 @@ _tenat
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
-

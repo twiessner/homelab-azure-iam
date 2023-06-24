@@ -1,33 +1,35 @@
 
-module "azure-ad-users" {
+module "users" {
   for_each = var.users
-  source   = "./modules/azure-ad-users"
+  source   = "./modules/azuread/users"
 
-  account_enabled     = each.value.account_enabled
-  given_name          = each.value.given_name
-  surname             = each.value.surname
-  user_principal_name = each.value.user_principal_name
+  primary_domain = var.primary_domain
+
+  account_enabled = each.value.account_enabled
+  given_name      = each.value.given_name
+  surname         = each.value.surname
 }
 
-module "azure-ad-groups" {
+module "groups" {
   for_each = var.groups
-  source   = "./modules/azure-ad-groups"
+  source   = "./modules/azuread/groups"
 
   display_name        = each.key
   members             = each.value.members
   azure_ad_role_names = each.value.azure_ad_role_names
 
   depends_on = [
-    module.azure-ad-users
+    module.users
   ]
 }
 
-module "azure-ad-pim" {
+/**
+module "pim" {
   for_each = var.groups
-  source   = "./modules/azure-ad-pim"
+  source   = "./modules/azuread/pim"
 
-  group_id               = module.azure-ad-groups[each.key].object_id
+  group_id               = module.groups[each.key].object_id
   azure_ad_role_names    = each.value.azure_ad_role_names
   azure_rbac_assignments = each.value.azure_rbac_assignments
-
 }
+**/
